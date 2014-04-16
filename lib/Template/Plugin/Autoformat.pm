@@ -14,7 +14,7 @@
 #       documentation
 #
 # COPYRIGHT
-#   Copyright (C) 2000-2008 Robert McArthur, Andy Wardley.  
+#   Copyright (C) 2000-2008 Robert McArthur, Andy Wardley.
 #   All Rights Reserved.
 #
 #   This module is free software; you can redistribute it and/or
@@ -32,35 +32,36 @@ use Text::Autoformat;
 our $VERSION = 2.71;
 
 sub new {
-    my ($class, $context, $options) = @_;
+    my ( $class, $context, $options ) = @_;
     my $filter_factory;
     my $plugin;
 
     if ($options) {
+
         # create a closure to generate filters with additional options
         $filter_factory = sub {
             my $context = shift;
-            my $filtopt = ref $_[-1] eq 'HASH' ? pop : { };
+            my $filtopt = ref $_[-1] eq 'HASH' ? pop : {};
             @$filtopt{ keys %$options } = values %$options;
             return sub {
-                tt_autoformat(@_, $filtopt);
+                tt_autoformat( @_, $filtopt );
             };
         };
 
         # and a closure to represent the plugin
         $plugin = sub {
-            my $plugopt = ref $_[-1] eq 'HASH' ? pop : { };
+            my $plugopt = ref $_[-1] eq 'HASH' ? pop : {};
             @$plugopt{ keys %$options } = values %$options;
-            tt_autoformat(@_, $plugopt);
+            tt_autoformat( @_, $plugopt );
         };
     }
     else {
         # simple filter factory closure (no legacy options from constructor)
         $filter_factory = sub {
             my $context = shift;
-            my $filtopt = ref $_[-1] eq 'HASH' ? pop : { };
+            my $filtopt = ref $_[-1] eq 'HASH' ? pop : {};
             return sub {
-                tt_autoformat(@_, $filtopt);
+                tt_autoformat( @_, $filtopt );
             };
         };
 
@@ -69,15 +70,17 @@ sub new {
     }
 
     # now define the filter and return the plugin
-    $context->define_filter('autoformat', [ $filter_factory => 1 ]);
+    $context->define_filter( 'autoformat', [ $filter_factory => 1 ] );
     return $plugin;
 }
 
 sub tt_autoformat {
-    my $options = ref $_[-1] eq 'HASH' ? pop : { };
-    my $form = $options->{ form };
-    my $out = $form ? Text::Autoformat::form($options, $form, @_)
-                    : Text::Autoformat::autoformat(join('', @_), $options);
+    my $options = ref $_[-1] eq 'HASH' ? pop : {};
+    my $form = $options->{form};
+    my $out
+        = $form
+        ? Text::Autoformat::form( $options, $form, @_ )
+        : Text::Autoformat::autoformat( join( '', @_ ), $options );
     return $out;
 }
 
