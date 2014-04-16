@@ -20,22 +20,19 @@ use Template qw( :status );
 use Template::Test;
 use POSIX qw( localeconv );
 
-$Template::Test::DEBUG = 0;
+$Template::Test::DEBUG    = 0;
 $Template::Test::PRESERVE = 1;
 
-# for testing known bug with locales that don't use '.' as a decimal 
+# for testing known bug with locales that don't use '.' as a decimal
 # separator - see TODO file.
 # POSIX::setlocale( &POSIX::LC_ALL, 'sv_SE' );
 
 my $loc = localeconv;
-my $dec = $loc->{ decimal_point };
+my $dec = $loc->{decimal_point};
 
-my $vars = {
-    decimal => $dec,
-};
+my $vars = { decimal => $dec, };
 
-test_expect(\*DATA, { POST_CHOMP => 1 }, $vars);
- 
+test_expect( \*DATA, { POST_CHOMP => 1 }, $vars );
 
 #------------------------------------------------------------------------
 # test input
