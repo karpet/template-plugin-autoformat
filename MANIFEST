@@ -1,0 +1,6 @@
+lib/Template/Plugin/Autoformat.pm
+Makefile.PL
+MANIFEST			This list of files
+README
+t/autoform.t
+META.yml                                 Module meta-data (added by MakeMaker)

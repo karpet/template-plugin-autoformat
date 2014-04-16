@@ -1,0 +1,21 @@
+--- #YAML:1.0
+name:               Template-Plugin-Autoformat
+version:            2.71
+abstract:           TT plugin for Text::Autoformat
+author:
+    - Andy Wardley <abw@wardley.org>
+license:            perl
+distribution_type:  module
+configure_requires:
+    ExtUtils::MakeMaker:  0
+requires:
+    Template:          2.2
+    Text::Autoformat:  1.13
+no_index:
+    directory:
+        - t
+        - inc
+generated_by:       ExtUtils::MakeMaker version 6.46
+meta-spec:
+    url:      http://module-build.sourceforge.net/META-spec-v1.4.html
+    version:  1.4
