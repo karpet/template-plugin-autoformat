@@ -116,9 +116,8 @@ AUTHORS
     clever stuff.
 
     The module was moved out of the Template Toolkit core and into a
-    separate distribution in December 2008. Andy Wardley is the current
-    maintainer, but rarely uses the module these days. So if anyone else out
-    there wants to take over ownership of it then please get in touch.
+    separate distribution in December 2008. Peter Karman is the current
+    maintainer.
 
 COPYRIGHT
     Copyright (C) 2000-2007 Robert McArthur & Andy Wardley. All Rights

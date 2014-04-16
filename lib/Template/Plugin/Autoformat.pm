@@ -210,9 +210,8 @@ Damian Conway wrote the L<Text::Autoformat> module which does all the clever
 stuff.
 
 The module was moved out of the L<Template Toolkit|Template> core and into
-a separate distribution in December 2008.  Andy Wardley is the current 
-maintainer, but rarely uses the module these days.  So if anyone else out
-there wants to take over ownership of it then please get in touch. 
+a separate distribution in December 2008.  Peter Karman is the current 
+maintainer.
 
 =head1 COPYRIGHT
 
