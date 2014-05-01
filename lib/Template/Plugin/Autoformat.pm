@@ -29,7 +29,7 @@ use warnings;
 use base 'Template::Plugin';
 use Text::Autoformat;
 
-our $VERSION = 2.71;
+our $VERSION = '2.74_01';
 
 sub new {
     my ( $class, $context, $options ) = @_;
@@ -80,7 +80,7 @@ sub tt_autoformat {
     my $out
         = $form
         ? Text::Autoformat::form( $options, $form, @_ )
-        : Text::Autoformat::Autoformat( join( '', @_ ), $options );
+        : Text::Autoformat::autoformat( join( '', @_ ), $options );
     return $out;
 }
 
