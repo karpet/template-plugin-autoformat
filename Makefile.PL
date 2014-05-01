@@ -7,27 +7,39 @@ use ExtUtils::MakeMaker;
 my %opts = (
     'NAME'         => 'Template-Plugin-Autoformat',
     'VERSION_FROM' => 'lib/Template/Plugin/Autoformat.pm',
-    'PMLIBDIRS'    => [ 'lib' ], 
-    'PREREQ_PM'    => { 
+    'PMLIBDIRS'    => ['lib'],
+    'PREREQ_PM'    => {
         'Template'         => 2.20,
         'Text::Autoformat' => 1.13,
     },
-    'dist'         => {
+    'dist' => {
         'COMPRESS' => 'gzip',
         'SUFFIX'   => 'gz',
     },
-    'test'         => {
-        'TESTS'    => 't/autoform.t',
-    },
+    'test' => { 'TESTS' => 't/autoform.t', },
 );
 
-if ($ExtUtils::MakeMaker::VERSION >= 5.43) {
-    $opts{ AUTHOR   } = 'Andy Wardley <abw@wardley.org>';
-    $opts{ ABSTRACT } = 'TT plugin for Text::Autoformat',
+if ( $ExtUtils::MakeMaker::VERSION >= 5.43 ) {
+    $opts{AUTHOR}   = 'Andy Wardley <abw@wardley.org>';
+    $opts{ABSTRACT} = 'TT plugin for Text::Autoformat',;
 }
 
-if ($ExtUtils::MakeMaker::VERSION ge '6.30_00') {
-    $opts{'LICENSE' } = 'perl';
-} 
+if ( $ExtUtils::MakeMaker::VERSION ge '6.30_00' ) {
+    $opts{'LICENSE'} = 'perl';
+}
 
-WriteMakefile( %opts );
+if ( $ExtUtils::MakeMaker::VERSION ge '6.44' ) {
+    $opts{'META_MERGE'} = {
+        resources => {
+            license => 'http://dev.perl.org/licenses/',
+            homepage =>
+                'https://github.com/karpet/template-plugin-autoformat',
+            bugtracker =>
+                'http://rt.cpan.org/NoAuth/Bugs.html?Dist=Template-Plugin-Autoformat',
+            repository =>
+                'https://github.com/karpet/template-plugin-autoformat',
+        },
+    };
+}
+
+WriteMakefile(%opts);
