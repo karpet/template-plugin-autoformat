@@ -58,7 +58,7 @@ for a reasonable length
   reasonable length
 
 -- test --
-[% USE autoformat(left=5) %]
+[% USE Autoformat(left=5) %]
 [% autoformat(global.text, right=30) %]
 -- expect --
     This is some text which I
@@ -68,7 +68,7 @@ for a reasonable length
     for a reasonable length
 
 -- test --
-[% USE autoformat %]
+[% USE Autoformat %]
 [% autoformat(global.text, 'more text', right=50) %]
 -- expect --
 This is some text which I would like to have
@@ -76,14 +76,14 @@ formatted and I should ensure that it continues
 for a reasonable length more text
 
 -- test --
-[% USE autoformat(left=10) %]
+[% USE Autoformat(left=10) %]
 [% global.text | autoformat %]
 -- expect --
          This is some text which I would like to have formatted and I
          should ensure that it continues for a reasonable length
 
 -- test --
-[% USE autoformat(left=5) %]
+[% USE Autoformat(left=5) %]
 [% global.text | autoformat(right=30) %]
 -- expect --
     This is some text which I
@@ -93,7 +93,7 @@ for a reasonable length more text
     for a reasonable length
 
 -- test --
-[% USE autoformat %]
+[% USE Autoformat %]
 [% FILTER autoformat(right=>30, case => 'upper') -%]
 This is some more text.  OK!  There's no need to shout!
 > quoted stuff goes here
@@ -108,14 +108,14 @@ THERE'S NO NEED TO SHOUT!
 > blah blah blah
 
 -- test --
-[% USE autoformat %]
+[% USE Autoformat %]
 [% autoformat(global.text, ' of time.') %]
 -- expect --
 This is some text which I would like to have formatted and I should
 ensure that it continues for a reasonable length of time.
 
 -- test --
-[% USE autoformat %]
+[% USE Autoformat %]
 [% autoformat(global.text, ' of time.', right=>30) %]
 -- expect --
 This is some text which I
@@ -125,7 +125,7 @@ continues for a reasonable
 length of time.
 
 -- test --
-[% USE autoformat %]
+[% USE Autoformat %]
 [% FILTER poetry = autoformat(left => 20, right => 40) %]
    Be not afeard.  The isle is full of noises, sounds and sweet 
    airs that give delight but hurt not.
@@ -150,7 +150,7 @@ Item      Description          Cost
 [% form = BLOCK %]
 <<<<<<    [[[[[[[[[[[[[[[   >>>>.<<
 [% END -%]
-[% USE autoformat(form => form) %]
+[% USE Autoformat(form => form) %]
 [% autoformat('foo', 'The Foo Item', 123.545) %]
 [% autoformat('bar', 'The Bar Item', 456.789) %]
 -- expect --
@@ -161,7 +161,7 @@ foo       The Foo Item       123[% decimal %]55
 bar       The Bar Item       456[% decimal %]79
 
 -- test --
-[% USE autoformat(form => '>>>.<<', numeric => 'AllPlaces') %]
+[% USE Autoformat(form => '>>>.<<', numeric => 'AllPlaces') %]
 [% autoformat(n) 
     FOREACH n = [ 123, 34.54, 99 ] +%]
 [% autoformat(987, 654.32) %]
