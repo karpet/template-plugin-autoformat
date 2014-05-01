@@ -59,7 +59,7 @@ for a reasonable length
 
 -- test --
 [% USE Autoformat(left=5) %]
-[% autoformat(global.text, right=30) %]
+[% Autoformat(global.text, right=30) %]
 -- expect --
     This is some text which I
     would like to have
@@ -69,7 +69,7 @@ for a reasonable length
 
 -- test --
 [% USE Autoformat %]
-[% autoformat(global.text, 'more text', right=50) %]
+[% Autoformat(global.text, 'more text', right=50) %]
 -- expect --
 This is some text which I would like to have
 formatted and I should ensure that it continues
@@ -77,14 +77,14 @@ for a reasonable length more text
 
 -- test --
 [% USE Autoformat(left=10) %]
-[% global.text | autoformat %]
+[% global.text | Autoformat %]
 -- expect --
          This is some text which I would like to have formatted and I
          should ensure that it continues for a reasonable length
 
 -- test --
 [% USE Autoformat(left=5) %]
-[% global.text | autoformat(right=30) %]
+[% global.text | Autoformat(right=30) %]
 -- expect --
     This is some text which I
     would like to have
@@ -94,7 +94,7 @@ for a reasonable length more text
 
 -- test --
 [% USE Autoformat %]
-[% FILTER autoformat(right=>30, case => 'upper') -%]
+[% FILTER Autoformat(right=>30, case => 'upper') -%]
 This is some more text.  OK!  There's no need to shout!
 > quoted stuff goes here
 > more quoted stuff
@@ -109,14 +109,14 @@ THERE'S NO NEED TO SHOUT!
 
 -- test --
 [% USE Autoformat %]
-[% autoformat(global.text, ' of time.') %]
+[% Autoformat(global.text, ' of time.') %]
 -- expect --
 This is some text which I would like to have formatted and I should
 ensure that it continues for a reasonable length of time.
 
 -- test --
 [% USE Autoformat %]
-[% autoformat(global.text, ' of time.', right=>30) %]
+[% Autoformat(global.text, ' of time.', right=>30) %]
 -- expect --
 This is some text which I
 would like to have formatted
@@ -126,7 +126,7 @@ length of time.
 
 -- test --
 [% USE Autoformat %]
-[% FILTER poetry = autoformat(left => 20, right => 40) %]
+[% FILTER poetry = Autoformat(left => 20, right => 40) %]
    Be not afeard.  The isle is full of noises, sounds and sweet 
    airs that give delight but hurt not.
 [% END %]
@@ -151,8 +151,8 @@ Item      Description          Cost
 <<<<<<    [[[[[[[[[[[[[[[   >>>>.<<
 [% END -%]
 [% USE Autoformat(form => form) %]
-[% autoformat('foo', 'The Foo Item', 123.545) %]
-[% autoformat('bar', 'The Bar Item', 456.789) %]
+[% Autoformat('foo', 'The Foo Item', 123.545) %]
+[% Autoformat('bar', 'The Bar Item', 456.789) %]
 -- expect --
 -- process --
 Item      Description          Cost
@@ -162,9 +162,9 @@ bar       The Bar Item       456[% decimal %]79
 
 -- test --
 [% USE Autoformat(form => '>>>.<<', numeric => 'AllPlaces') %]
-[% autoformat(n) 
+[% Autoformat(n) 
     FOREACH n = [ 123, 34.54, 99 ] +%]
-[% autoformat(987, 654.32) %]
+[% Autoformat(987, 654.32) %]
 -- expect --
 -- process --
 123[% decimal %]00

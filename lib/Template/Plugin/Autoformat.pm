@@ -70,7 +70,7 @@ sub new {
     }
 
     # now define the filter and return the plugin
-    $context->define_filter( 'autoformat', [ $filter_factory => 1 ] );
+    $context->define_filter( 'Autoformat', [ $filter_factory => 1 ] );
     return $plugin;
 }
 
