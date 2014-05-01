@@ -80,7 +80,7 @@ sub tt_autoformat {
     my $out
         = $form
         ? Text::Autoformat::form( $options, $form, @_ )
-        : Text::Autoformat::autoformat( join( '', @_ ), $options );
+        : Text::Autoformat::Autoformat( join( '', @_ ), $options );
     return $out;
 }
 
@@ -94,11 +94,11 @@ Template::Plugin::Autoformat - Interface to Text::Autoformat module
 
 =head1 SYNOPSIS
 
-    [% USE autoformat(options) %]
+    [% USE Autoformat(options) %]
     
-    [% autoformat(text, more_text, ..., options) %]
+    [% Autoformat(text, more_text, ..., options) %]
     
-    [% FILTER autoformat(options) %]
+    [% FILTER Autoformat(options) %]
        a block of text
     [% END %]
 
@@ -111,40 +111,40 @@ Template::Plugin::Autoformat - Interface to Text::Autoformat module
     [% END %]
 
     # pass options to constructor...
-    [% USE autoformat(case => 'upper') %]
-    [% autoformat(text) %]
+    [% USE Autoformat(case => 'upper') %]
+    [% Autoformat(text) %]
     
-    # and/or pass options to the autoformat subroutine itself
-    [% USE autoformat %]
-    [% autoformat(text, case => 'upper') %]
+    # and/or pass options to the Autoformat subroutine itself
+    [% USE Autoformat %]
+    [% Autoformat(text, case => 'upper') %]
     
-    # using the autoformat filter
-    [% USE autoformat(left => 10, right => 30) %]
-    [% FILTER autoformat %]
+    # using the Autoformat filter
+    [% USE Autoformat(left => 10, right => 30) %]
+    [% FILTER Autoformat %]
        Be not afeard.  The isle is full of noises, sounds and sweet 
        airs that give delight but hurt not.
     [% END %]
 
     # another filter example with configuration options
-    [% USE autoformat %]
-    [% FILTER autoformat(left => 20) %]
+    [% USE Autoformat %]
+    [% FILTER Autoformat(left => 20) %]
        Be not afeard.  The isle is full of noises, sounds and sweet 
        airs that give delight but hurt not.
     [% END %]
 
     # another FILTER example, defining a 'poetry' filter alias
-    [% USE autoformat %]
-    [% text FILTER poetry = autoformat(left => 20, right => 40) %]
+    [% USE Autoformat %]
+    [% text FILTER poetry = Autoformat(left => 20, right => 40) %]
     
     # reuse the 'poetry' filter alias
     [% text FILTER poetry %]
 
     # shorthand form ('|' is an alias for 'FILTER')
-    [% text | autoformat %]
+    [% text | Autoformat %]
 
     # using forms
-    [% USE autoformat(form => '>>>>.<<<', numeric => 'AllPlaces') %]
-    [% autoformat(10, 20.32, 11.35) %]
+    [% USE Autoformat(form => '>>>>.<<<', numeric => 'AllPlaces') %]
+    [% Autoformat(10, 20.32, 11.35) %]
 
 =head1 DESCRIPTION
 
@@ -152,21 +152,25 @@ This L<Template Toolkit|Template> plugin module is an interface to Damian
 Conway's C<Text::Autoformat> Perl module which provides advanced text wrapping
 and formatting.
 
+B<NOTE> as of version 2.75 the usage has changed to initial cap C<Autoformat>
+instead of the previous C<autoformat>. This brings it into alignment with
+standard plugin syntax.
+
 Configuration options may be passed to the plugin constructor via the 
 C<USE> directive.
 
-    [% USE autoformat(right => 30) %]
+    [% USE Autoformat(right => 30) %]
 
-The autoformat subroutine can then be called, passing in text items which 
+The Autoformat subroutine can then be called, passing in text items which 
 will be wrapped and formatted according to the current configuration.
 
-    [% autoformat('The cat sat on the mat') %]
+    [% Autoformat('The cat sat on the mat') %]
 
-Additional configuration items can be passed to the autoformat subroutine
+Additional configuration items can be passed to the Autoformat subroutine
 and will be merged with any existing configuration specified via the 
 constructor.
 
-    [% autoformat(text, left => 20) %]
+    [% Autoformat(text, left => 20) %]
 
 Configuration options are passed directly to the C<Text::Autoformat> plugin.
 At the time of writing, the basic configuration items are:
@@ -181,20 +185,20 @@ At the time of writing, the basic configuration items are:
 
 The plugin also accepts a C<form> item which can be used to define a 
 format string.  When a form is defined, the plugin will call the 
-underlying C<form()> subroutine in preference to C<autoformat()>.
+underlying C<form()> subroutine in preference to C<Autoformat()>.
 
-    [% USE autoformat(form => '>>>>.<<') %]
-    [% autoformat(123.45, 666, 3.14) %]
+    [% USE Autoformat(form => '>>>>.<<') %]
+    [% Autoformat(123.45, 666, 3.14) %]
 
 Additional configuration items relevant to forms can also be specified.
 
-    [% USE autoformat(form => '>>>>.<<', numeric => 'AllPlaces') %]
-    [% autoformat(123.45, 666, 3.14) %]
+    [% USE Autoformat(form => '>>>>.<<', numeric => 'AllPlaces') %]
+    [% Autoformat(123.45, 666, 3.14) %]
 
-These can also be passed directly to the autoformat subroutine.
+These can also be passed directly to the Autoformat subroutine.
 
-    [% USE autoformat %]
-    [% autoformat( 123.45, 666, 3.14,
+    [% USE Autoformat %]
+    [% Autoformat( 123.45, 666, 3.14,
                    form    => '>>>>.<<', 
                    numeric => 'AllPlaces' )
     %]
