@@ -30,6 +30,8 @@ $Template::Test::PRESERVE = 1;
 my $loc = localeconv;
 my $dec = $loc->{decimal_point};
 
+warn "decimal==$dec";
+
 my $vars = { decimal => $dec, };
 
 test_expect( \*DATA, { POST_CHOMP => 1 }, $vars );
@@ -148,7 +150,7 @@ length of time.
 Item      Description          Cost
 ===================================
 [% form = BLOCK %]
-<<<<<<    [[[[[[[[[[[[[[[   >>>>.<<
+<<<<<<    [[[[[[[[[[[[[[[   >>>>[% decimal %]<<
 [% END -%]
 [% USE Autoformat(form => form) %]
 [% Autoformat('foo', 'The Foo Item', 123.545) %]

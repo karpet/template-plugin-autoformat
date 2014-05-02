@@ -16,7 +16,8 @@ my %opts = (
         'COMPRESS' => 'gzip',
         'SUFFIX'   => 'gz',
     },
-    'test' => { 'TESTS' => 't/autoform.t', },
+    'test'  => { 'TESTS' => 't/autoform.t', },
+    'clean' => { FILES   => 'Template-Plugin-Autoformat-*tar.gz' },
 );
 
 if ( $ExtUtils::MakeMaker::VERSION >= 5.43 ) {
