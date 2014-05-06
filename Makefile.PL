@@ -16,7 +16,6 @@ my %opts = (
         'COMPRESS' => 'gzip',
         'SUFFIX'   => 'gz',
     },
-    'test'  => { 'TESTS' => 't/autoform.t', },
     'clean' => { FILES   => 'Template-Plugin-Autoformat-*tar.gz' },
 );
 

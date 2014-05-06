@@ -1,9 +1,12 @@
 Revision history for Template-Plugin-Autoformat
 
-2.74_02 - xxx
+2.74_03 - 6 May 2014
+ - port tests to Test::More to get better diagnostics from cpantesters
+
+2.74_02 - 2 May 2014
  - attempt to address failing test 10 on some cpantesters
 
-2.74_01 - xxx
+2.74_01 - 1 May 2014
  - Peter Karman took over maintenance.
  - repo started at https://github.com/karpet/template-plugin-autoformat
  - fixed failing tests, switching to standard initial-cap for plugin name
