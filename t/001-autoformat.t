@@ -1,27 +1,10 @@
-#============================================================= -*-perl-*-
-#
-# t/autoform.t
-#
-# Template script testing the autoformat TT plugin.
-#
-# Written by Andy Wardley <abw@wardley.org>
-#
-# Copyright (C) 1996-2008 Andy Wardley.  All Rights Reserved.
-#
-# This is free software; you can redistribute it and/or modify it
-# under the same terms as Perl itself.
-#
-#========================================================================
-
+#!/usr/bin/env perl
 use strict;
 use warnings;
 use lib qw( ../lib );
 use Template qw( :status );
-use Template::Test;
+use Test::More tests => 23;
 use POSIX qw( localeconv );
-
-$Template::Test::DEBUG    = 1;
-$Template::Test::PRESERVE = 1;
 
 # for testing known bug with locales that don't use '.' as a decimal
 # separator - see TODO file.
@@ -32,16 +15,14 @@ my $dec = $loc->{decimal_point};
 
 warn "decimal==$dec";
 
-my $vars = { decimal => $dec, };
+my $vars = { decimal    => $dec, };
+my $opts = { POST_CHOMP => 1 };
+my ( $buf, $tmpl, $expected );
 
-test_expect( \*DATA, { POST_CHOMP => 1 }, $vars );
+ok( my $template = Template->new($opts), "Template->new" );
 
-#------------------------------------------------------------------------
-# test input
-#------------------------------------------------------------------------
-
-__DATA__
--- test --
+###############################################################
+$tmpl = <<EOF;
 [% global.text = BLOCK %]
 This is some text which
 I would like to have formatted
@@ -50,7 +31,9 @@ for a reasonable length
 [% END %]
 [% USE Autoformat(left => 3, right => 20) %]
 [% Autoformat(global.text) %]
--- expect --
+EOF
+
+$expected = <<EOF;
   This is some text
   which I would like
   to have formatted
@@ -59,42 +42,84 @@ for a reasonable length
   continues for a
   reasonable length
 
--- test --
+EOF
+
+ok( $template->process( \$tmpl, $vars, \$buf ), "process tmpl" );
+is( $buf, $expected, "got expected" );
+
+###############################################################
+$tmpl = <<EOF;
 [% USE Autoformat(left=5) %]
 [% Autoformat(global.text, right=30) %]
--- expect --
+EOF
+
+$expected = <<EOF;
     This is some text which I
     would like to have
     formatted and I should
     ensure that it continues
     for a reasonable length
 
--- test --
+EOF
+
+$buf = "";
+ok( $template->process( \$tmpl, $vars, \$buf ), "process tmpl" );
+is( $buf, $expected, "got expected" );
+
+###############################################################
+$tmpl = <<EOF;
 [% USE Autoformat %]
 [% Autoformat(global.text, 'more text', right=50) %]
--- expect --
+EOF
+
+$expected = <<EOF;
 This is some text which I would like to have
 formatted and I should ensure that it continues
 for a reasonable length more text
 
--- test --
+EOF
+
+$buf = "";
+ok( $template->process( \$tmpl, $vars, \$buf ), "process tmpl" );
+is( $buf, $expected, "got expected" );
+
+###############################################################
+$tmpl = <<EOF;
 [% USE Autoformat(left=10) %]
 [% global.text | Autoformat %]
--- expect --
+EOF
+
+$expected = <<EOF;
          This is some text which I would like to have formatted and I
          should ensure that it continues for a reasonable length
 
--- test --
+EOF
+
+$buf = "";
+ok( $template->process( \$tmpl, $vars, \$buf ), "process tmpl" );
+is( $buf, $expected, "got expected" );
+
+###############################################################
+$tmpl = <<EOF;
 [% USE Autoformat(left=5) %]
 [% global.text | Autoformat(right=30) %]
--- expect --
+EOF
+
+$expected = <<EOF;
     This is some text which I
     would like to have
     formatted and I should
     ensure that it continues
     for a reasonable length
 
--- test --
+EOF
+
+$buf = "";
+ok( $template->process( \$tmpl, $vars, \$buf ), "process tmpl" );
+is( $buf, $expected, "got expected" );
+
+###############################################################
+$tmpl = <<EOF;
 [% USE Autoformat %]
 [% FILTER Autoformat(right=>30, case => 'upper') -%]
 This is some more text.  OK!  There's no need to shout!
@@ -102,31 +127,57 @@ This is some more text.  OK!  There's no need to shout!
 > more quoted stuff
 > blah blah blah
 [% END %]
--- expect --
+EOF
+
+$expected = <<EOF;
 THIS IS SOME MORE TEXT. OK!
 THERE'S NO NEED TO SHOUT!
 > quoted stuff goes here
 > more quoted stuff
 > blah blah blah
+EOF
 
--- test --
+$buf = "";
+ok( $template->process( \$tmpl, $vars, \$buf ), "process tmpl" );
+is( $buf, $expected, "got expected" );
+
+###############################################################
+$tmpl = <<EOF;
 [% USE Autoformat %]
 [% Autoformat(global.text, ' of time.') %]
--- expect --
+EOF
+
+$expected = <<EOF;
 This is some text which I would like to have formatted and I should
 ensure that it continues for a reasonable length of time.
 
--- test --
+EOF
+
+$buf = "";
+ok( $template->process( \$tmpl, $vars, \$buf ), "process tmpl" );
+is( $buf, $expected, "got expected" );
+
+###############################################################
+$tmpl = <<EOF;
 [% USE Autoformat %]
 [% Autoformat(global.text, ' of time.', right=>30) %]
--- expect --
+EOF
+
+$expected = <<EOF;
 This is some text which I
 would like to have formatted
 and I should ensure that it
 continues for a reasonable
 length of time.
 
--- test --
+EOF
+
+$buf = "";
+ok( $template->process( \$tmpl, $vars, \$buf ), "process tmpl" );
+is( $buf, $expected, "got expected" );
+
+###############################################################
+$tmpl = <<EOF;
 [% USE Autoformat %]
 [% FILTER poetry = Autoformat(left => 20, right => 40) %]
    Be not afeard.  The isle is full of noises, sounds and sweet 
@@ -135,8 +186,9 @@ length of time.
 [% FILTER poetry %]
    I cried to dream again.
 [% END %]
+EOF
 
--- expect --
+$expected = <<EOF;
                    Be not afeard. The
                    isle is full of
                    noises, sounds and
@@ -146,7 +198,14 @@ length of time.
                    I cried to dream
                    again.
 
--- test --
+EOF
+
+$buf = "";
+ok( $template->process( \$tmpl, $vars, \$buf ), "process tmpl" );
+is( $buf, $expected, "got expected" );
+
+###############################################################
+$tmpl = <<EOF;
 Item      Description          Cost
 ===================================
 [% form = BLOCK %]
@@ -155,23 +214,37 @@ Item      Description          Cost
 [% USE Autoformat(form => form) %]
 [% Autoformat('foo', 'The Foo Item', 123.545) %]
 [% Autoformat('bar', 'The Bar Item', 456.789) %]
--- expect --
--- process --
+EOF
+
+$expected = <<EOF;
 Item      Description          Cost
 ===================================
-foo       The Foo Item       123[% decimal %]55
-bar       The Bar Item       456[% decimal %]79
+foo       The Foo Item       123${dec}55
+bar       The Bar Item       456${dec}79
+EOF
 
--- test --
+$buf = "";
+ok( $template->process( \$tmpl, $vars, \$buf ), "process tmpl" );
+is( $buf, $expected, "got expected" );
+
+###############################################################
+$tmpl = <<EOF;
 [% USE Autoformat(form => '>>>.<<', numeric => 'AllPlaces') %]
 [% Autoformat(n) 
     FOREACH n = [ 123, 34.54, 99 ] +%]
 [% Autoformat(987, 654.32) %]
--- expect --
--- process --
-123[% decimal %]00
- 34[% decimal %]54
- 99[% decimal %]00
+EOF
 
-987[% decimal %]00
-654[% decimal %]32
+$expected = <<EOF;
+123${dec}00
+ 34${dec}54
+ 99${dec}00
+
+987${dec}00
+654${dec}32
+EOF
+
+$buf = "";
+ok( $template->process( \$tmpl, $vars, \$buf ), "process tmpl" );
+is( $buf, $expected, "got expected" );
+
