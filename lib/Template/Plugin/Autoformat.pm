@@ -29,7 +29,7 @@ use warnings;
 use base 'Template::Plugin';
 use Text::Autoformat;
 
-our $VERSION = '2.74_03';
+our $VERSION = '2.74_04';
 
 sub new {
     my ( $class, $context, $options ) = @_;

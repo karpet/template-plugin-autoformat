@@ -32,7 +32,11 @@ my $dec = $loc->{decimal_point};
 
 warn "decimal==$dec";
 
-my $vars = { decimal => $dec, };
+# sprintf rounding is somewhat unpredictable per-machine,
+# so make our expectations align predictably.
+my $rounded = sprintf('%0.2f', '123.545');
+
+my $vars = { decimal => $dec, rounded => $rounded };
 
 test_expect( \*DATA, { POST_CHOMP => 1 }, $vars );
 
@@ -159,7 +163,8 @@ Item      Description          Cost
 -- process --
 Item      Description          Cost
 ===================================
-foo       The Foo Item       123[% decimal %]55
+foo       The Foo Item       [% rounded %]
+
 bar       The Bar Item       456[% decimal %]79
 
 -- test --

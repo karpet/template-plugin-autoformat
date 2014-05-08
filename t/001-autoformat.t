@@ -216,10 +216,14 @@ Item      Description          Cost
 [% Autoformat('bar', 'The Bar Item', 456.789) %]
 EOF
 
+# sprintf rounding is somewhat unpredictable per-machine,
+# so make our expectations align predictably.
+my $rounded = sprintf('%0.2f', '123.545');
+
 $expected = <<EOF;
 Item      Description          Cost
 ===================================
-foo       The Foo Item       123${dec}55
+foo       The Foo Item       $rounded
 bar       The Bar Item       456${dec}79
 EOF
 
