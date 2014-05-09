@@ -1,5 +1,8 @@
 Revision history for Template-Plugin-Autoformat
 
+2.75 - 9 May 2014
+ - official release, no code change from 2.74_04
+
 2.74_04 - 7 May 2014
  - tweek tests to reflect sprintf rounding differences on some machines
 
