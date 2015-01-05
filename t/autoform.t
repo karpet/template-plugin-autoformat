@@ -26,6 +26,7 @@ $Template::Test::PRESERVE = 1;
 # for testing known bug with locales that don't use '.' as a decimal
 # separator - see TODO file.
 # POSIX::setlocale( &POSIX::LC_ALL, 'sv_SE' );
+POSIX::setlocale( &POSIX::LC_ALL, 'C' );
 
 my $loc = localeconv;
 my $dec = $loc->{decimal_point};
