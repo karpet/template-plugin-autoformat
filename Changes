@@ -1,5 +1,8 @@
 Revision history for Template-Plugin-Autoformat
 
+2.76 - 5 Jan 2014
+ - tests patched to fix some locales (https://rt.cpan.org/Ticket/Display.html?id=99972)
+
 2.75 - 9 May 2014
  - official release, no code change from 2.74_04
 
