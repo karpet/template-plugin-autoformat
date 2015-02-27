@@ -44,7 +44,7 @@ sub new {
             my $filtopt = ref $_[-1] eq 'HASH' ? pop : {};
             @$filtopt{ keys %$options } = values %$options;
             return sub {
-                tt_autoformat( @_, $filtopt );
+                _tt_autoformat( @_, $filtopt );
             };
         };
 
@@ -52,7 +52,7 @@ sub new {
         $plugin = sub {
             my $plugopt = ref $_[-1] eq 'HASH' ? pop : {};
             @$plugopt{ keys %$options } = values %$options;
-            tt_autoformat( @_, $plugopt );
+            _tt_autoformat( @_, $plugopt );
         };
     }
     else {
@@ -61,12 +61,12 @@ sub new {
             my $context = shift;
             my $filtopt = ref $_[-1] eq 'HASH' ? pop : {};
             return sub {
-                tt_autoformat( @_, $filtopt );
+                _tt_autoformat( @_, $filtopt );
             };
         };
 
         # plugin without options can be static
-        $plugin = \&tt_autoformat;
+        $plugin = \&_tt_autoformat;
     }
 
     # now define the filter and return the plugin
@@ -74,7 +74,7 @@ sub new {
     return $plugin;
 }
 
-sub tt_autoformat {
+sub _tt_autoformat {
     my $options = ref $_[-1] eq 'HASH' ? pop : {};
     my $form = $options->{form};
     my $out
