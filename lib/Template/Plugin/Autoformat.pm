@@ -219,7 +219,7 @@ maintainer.
 
 =head1 COPYRIGHT
 
-Copyright (C) 2000-2007 Robert McArthur & Andy Wardley.  All Rights Reserved.
+Copyright (C) 2000-2015 Robert McArthur & Andy Wardley.  All Rights Reserved.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
