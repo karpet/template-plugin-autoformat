@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use lib qw( ../lib );
 use Template qw( :status );
-use Test::More tests => 23;
+use Test::More tests => 25;
 use POSIX qw( localeconv );
 
 # for testing known bug with locales that don't use '.' as a decimal
@@ -21,6 +21,12 @@ my $opts = { POST_CHOMP => 1 };
 my ( $buf, $tmpl, $expected );
 
 ok( my $template = Template->new($opts), "Template->new" );
+
+###############################################################
+$tmpl = '[% USE Autoformat %][% "just some text" | Autoformat %]';
+$expected = "just some text\n\n";
+ok( $template->process( \$tmpl, {}, \$buf ), "process tmpl" );
+is( $buf, $expected, "got expected");
 
 ###############################################################
 $tmpl = <<EOF;
@@ -45,6 +51,7 @@ $expected = <<EOF;
 
 EOF
 
+$buf = "";
 ok( $template->process( \$tmpl, $vars, \$buf ), "process tmpl" );
 is( $buf, $expected, "got expected" );
 
