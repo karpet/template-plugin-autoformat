@@ -5,7 +5,7 @@ use warnings;
 use ExtUtils::MakeMaker;
 
 my %opts = (
-    'NAME'         => 'Template-Plugin-Autoformat',
+    'NAME'         => 'Template::Plugin::Autoformat',
     'VERSION_FROM' => 'lib/Template/Plugin/Autoformat.pm',
     'PMLIBDIRS'    => ['lib'],
     'PREREQ_PM'    => {
