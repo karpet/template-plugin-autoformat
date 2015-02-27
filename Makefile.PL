@@ -42,4 +42,9 @@ if ( $ExtUtils::MakeMaker::VERSION ge '6.44' ) {
     };
 }
 
+if (  $ExtUtils::MakeMaker::VERSION ge '6.48' ) {
+    $opts{'MIN_PERL_VERSION'} = '5.6.0';
+}
+
+
 WriteMakefile(%opts);
